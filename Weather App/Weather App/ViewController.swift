@@ -9,48 +9,77 @@ import UIKit
 
 class ViewController: UIViewController {
     
-   private let customView = UIView(frame: .zero)
+    private lazy var backgroundView: UIImageView = {
+        let imageView = UIImageView(frame: .zero) // tamanho zero por enquanto, Auto Layout vai defini
+        imageView.image = UIImage(named: "background") //Adicionadno a imagem
+        imageView.contentMode = .scaleAspectFill //preenche tudo
+        imageView.translatesAutoresizingMaskIntoConstraints = false //aqui permite que o Auto Layout funcione corretamente.
+        return imageView
+        
+    }()
+    
+    //card de cima arredondado
+    private lazy var headerView: UIView = {
+        let view = UIView(frame: .zero) //auto layout que vai cuidar do tamanho
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .white
+        view.layer.cornerRadius = 20
+        return view
+    }()
+    
+    private lazy var cityLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.systemFont(ofSize: 20)
+        label.text = "São Paulo"
+        label.textColor = .black
+        label.textAlignment = .center
+        return label
+    }()
+
     
     //metodo didLoad -> metodo de ciclo de vida que é executada sempre que a viewController é carregada
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupView()
-//        view.backgroundColor = .red
-//        
-//                //criando um quadrado
-//                let customView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-//                customView.backgroundColor = .blue
-//                //adicionando o quadrado na tela
-//                view.addSubview(customView)
-        
     }
     
-    //    //esse metodo é executado toda vez que a tela aparece, quando ela é vizivel
-    //    override func viewDidAppear(_ animated: Bool) {
-    //        super.viewDidAppear(animated)
-    //
-    //        performSegue(withIdentifier: "toForecast", sender: nil)
-    //    }
-    
     private func setupView() {
-        view.backgroundColor = .red
-        
-     
-        customView.backgroundColor = .black
-        customView.translatesAutoresizingMaskIntoConstraints = false //aqui permite que o Auto Layout funcione corretamente.
-        
-        view.addSubview(customView)
-        
+        view.backgroundColor = .red // aparece se a imagem não carregar
+        setHierarchy()
         setConstraints()
+    }
+    
+    private func setHierarchy(){
+        view.addSubview(backgroundView) // adiciona primeiro o fundo
+        view.addSubview(headerView) // depois adiciona o card que fica na frente
+        
+        headerView.addSubview(cityLabel)
     }
     
     private func setConstraints(){
         NSLayoutConstraint.activate([
-            customView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100),
-            customView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 50),
-            customView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -50),
-            customView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -100)
+            backgroundView.topAnchor.constraint(equalTo: view.topAnchor), //borda de cima da tela
+            backgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor), //borda esquerda da tela
+            backgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor), //borda direita
+            backgroundView.bottomAnchor.constraint(equalTo: view.bottomAnchor) //borda de baixo
+        ])
+        
+        NSLayoutConstraint.activate([
+            headerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 60),
+            headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 35),
+            headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -35),
+            headerView.heightAnchor.constraint(equalToConstant: 169)
+        ])
+        
+        NSLayoutConstraint.activate([
+            cityLabel.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 15),
+            cityLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 15),
+            cityLabel.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -15)
+        ])
+        
+        NSLayoutConstraint.activate([
+            
         ])
     }
 }

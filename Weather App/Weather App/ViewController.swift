@@ -9,6 +9,8 @@ import UIKit
 
 class ViewController: UIViewController {
     
+   private let customView = UIView(frame: .zero)
+    
     //metodo didLoad -> metodo de ciclo de vida que é executada sempre que a viewController é carregada
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,24 +34,24 @@ class ViewController: UIViewController {
     //    }
     
     private func setupView() {
-//        view.backgroundColor = .red
+        view.backgroundColor = .red
         
-        let customView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-        customView.backgroundColor = .red
-        customView.translatesAutoresizingMaskIntoConstraints = false
+     
+        customView.backgroundColor = .black
+        customView.translatesAutoresizingMaskIntoConstraints = false //aqui permite que o Auto Layout funcione corretamente.
         
         view.addSubview(customView)
         
+        setConstraints()
+    }
+    
+    private func setConstraints(){
         NSLayoutConstraint.activate([
             customView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100),
             customView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 50),
             customView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -50),
             customView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -100)
-            //            customView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            //            customView.widthAnchor.constraint(equalToConstant: 100),
-            //            customView.heightAnchor.constraint(equalToConstant: 100)
         ])
-        
     }
 }
 

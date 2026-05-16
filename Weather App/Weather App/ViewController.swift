@@ -32,9 +32,27 @@ class ViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 20)
         label.text = "São Paulo"
-        label.textColor = .black
+        label.textColor = UIColor(named: "primaryColor")
         label.textAlignment = .center
         return label
+    }()
+    
+    private lazy var temperatureLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.systemFont(ofSize: 70, weight: .bold)
+        label.text = "25°"
+        label.textColor = UIColor(named: "primaryColor")
+        label.textAlignment = .left
+        return label
+    }()
+    
+    private lazy var weatherIcon: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = UIImage(named: "solIcon")
+        imageView.contentMode = .scaleAspectFit
+        return imageView
     }()
 
     
@@ -55,6 +73,8 @@ class ViewController: UIViewController {
         view.addSubview(headerView) // depois adiciona o card que fica na frente
         
         headerView.addSubview(cityLabel)
+        headerView.addSubview(temperatureLabel)
+        headerView.addSubview(weatherIcon)
     }
     
     private func setConstraints(){
@@ -75,12 +95,18 @@ class ViewController: UIViewController {
         NSLayoutConstraint.activate([
             cityLabel.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 15),
             cityLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 15),
-            cityLabel.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -15)
+            cityLabel.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -15),
+            cityLabel.heightAnchor.constraint(equalToConstant: 20),
+            temperatureLabel.topAnchor.constraint(equalTo: cityLabel.bottomAnchor, constant: 21),
+            temperatureLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 26),
+            weatherIcon.heightAnchor.constraint(equalToConstant: 86),
+            weatherIcon.widthAnchor.constraint(equalToConstant: 86),
+            weatherIcon.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -26),
+            weatherIcon.centerYAnchor.constraint(equalTo: temperatureLabel.centerYAnchor),
+            weatherIcon.leadingAnchor.constraint(equalTo: temperatureLabel.trailingAnchor, constant: 15)
         ])
         
-        NSLayoutConstraint.activate([
-            
-        ])
+       
     }
 }
 
